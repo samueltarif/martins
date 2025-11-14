@@ -1,0 +1,22 @@
+{
+  "name": "landing-page",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "autoprefixer": "^10.4.22",
+    "nuxt": "^4.2.1",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.18"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.81.1"
+  }
+}
