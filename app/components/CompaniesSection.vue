@@ -2,11 +2,11 @@
   <section id="companies" class="py-20 bg-[var(--bg-primary)]">
     <div class="max-w-7xl mx-auto px-5">
       <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold mb-4 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] bg-clip-text text-transparent">
+        <h2 class="text-4xl font-bold mb-4 text-[var(--text-primary)]">
           Empresas que Represento
         </h2>
         <p class="text-[var(--text-secondary)] text-xl max-w-2xl mx-auto">
-          Parcerias sólidas com líderes de mercado em diversos setores
+          Parcerias sólidas com líderes de mercado
         </p>
         <div class="w-24 h-1 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] mx-auto mt-6 rounded-full"></div>
       </div>
@@ -17,23 +17,9 @@
             <!-- Todas as empresas em slides individuais -->
             <div v-for="(company, index) in allCompanies" :key="index" class="min-w-full">
               <div class="p-8">
-                <div class="company-card flex flex-col items-center gap-6 p-8 bg-[var(--bg-secondary)] rounded-2xl border border-black/10 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer animate-fade-in"
+                <div class="company-card flex flex-col items-center gap-6 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer animate-fade-in bg-white rounded-2xl border border-black/10"
                      @click="openCompanyModal(company)">
-                  <div class="initials-gradient w-24 h-24 rounded-full bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-secondary)] flex items-center justify-center shadow-lg">
-                    <span class="text-white font-bold text-2xl">{{ company.initials }}</span>
-                  </div>
-                  <div class="text-center space-y-2">
-                    <h3 class="font-bold text-[var(--text-primary)] text-xl">{{ company.name }}</h3>
-                    <p class="text-[var(--text-secondary)] font-medium">{{ company.sector }}</p>
-                    <div class="mt-4 px-4 py-2 bg-[var(--accent-primary)]/10 rounded-full">
-                      <span class="text-sm text-[var(--accent-primary)] font-semibold">{{ company.category }}</span>
-                    </div>
-                  </div>
-                  <div class="mt-6 text-center">
-                    <p class="text-sm text-[var(--text-secondary)] leading-relaxed max-w-xs">
-                      {{ company.description }}
-                    </p>
-                  </div>
+                  <img src="/images/GRUPOS.png" alt="Empresas" class="mx-auto" loading="lazy">
                 </div>
               </div>
             </div>
@@ -75,6 +61,12 @@
             </div>
           </div>
         </ClientOnly>
+        <div v-if="showImageModal" class="fixed inset-0 z-[2000] bg-black/80 backdrop-blur-sm flex items-center justify-center" @click="closeImageModal">
+          <div class="relative max-w-5xl w-full px-5" @click.stop>
+            <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white text-black flex items-center justify-center" aria-label="Fechar" @click="closeImageModal">×</button>
+            <img :src="modalImageSrc" alt="Empresas" class="w-full h-auto rounded-2xl shadow"/>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -89,89 +81,13 @@ const isClient = ref(false)
 
 // Todas as empresas em uma única lista para slides individuais
 const allCompanies = [
-  { 
-    name: 'TechCorp Solutions', 
-    sector: 'Software Empresarial', 
-    initials: 'TS',
-    category: 'Tecnologia',
-    description: 'Líder em soluções empresariais com mais de 15 anos de mercado, oferecendo software de gestão integrada para empresas de todos os portes.'
-  },
-  { 
-    name: 'InnovaLab Tecnologia', 
-    sector: 'Automação Industrial', 
-    initials: 'IT',
-    category: 'Tecnologia',
-    description: 'Especialista em automação industrial e IoT, transformando processos manuais em operações inteligentes e eficientes.'
-  },
-  { 
-    name: 'SmartSystems', 
-    sector: 'IoT & Conectividade', 
-    initials: 'SS',
-    category: 'Tecnologia',
-    description: 'Conectando dispositivos e pessoas através de soluções inovadoras de Internet das Coisas para um mundo mais inteligente.'
-  },
-  { 
-    name: 'DataFlow Analytics', 
-    sector: 'Business Intelligence', 
+  {
+    name: 'DataFlow Analytics',
+    sector: 'Business Intelligence',
     initials: 'DA',
     category: 'Tecnologia',
-    description: 'Transformando dados em insights valiosos através de análises avançadas e dashboards interativos para tomada de decisão.'
-  },
-  { 
-    name: 'Metalúrgica Silva', 
-    sector: 'Componentes Metálicos', 
-    initials: 'MS',
-    category: 'Industrial',
-    description: 'Tradição e qualidade na fabricação de componentes metálicos com precisão e durabilidade para diversos setores industriais.'
-  },
-  { 
-    name: 'Química Brasil', 
-    sector: 'Produtos Químicos', 
-    initials: 'QB',
-    category: 'Industrial',
-    description: 'Soluções químicas inovadoras e sustentáveis para indústrias de transformação, com foco em eficiência e segurança.'
-  },
-  { 
-    name: 'Construtora Lima', 
-    sector: 'Materiais de Construção', 
-    initials: 'CL',
-    category: 'Industrial',
-    description: 'Materiais de construção de alta qualidade que garantem resistência, beleza e valorização dos empreendimentos.'
-  },
-  { 
-    name: 'Packaging Pro', 
-    sector: 'Embalagens Industriais', 
-    initials: 'PP',
-    category: 'Industrial',
-    description: 'Especializada em embalagens industriais personalizadas que protegem e valorizam produtos durante todo o ciclo de distribuição.'
-  },
-  { 
-    name: 'Consultoria Max', 
-    sector: 'Gestão Empresarial', 
-    initials: 'CM',
-    category: 'Serviços',
-    description: 'Transformando negócios através de consultoria especializada em gestão, estratégia e processos empresariais.'
-  },
-  { 
-    name: 'Logística Express', 
-    sector: 'Transporte & Logística', 
-    initials: 'LE',
-    category: 'Serviços',
-    description: 'Soluções logísticas completas que garantem agilidade, segurança e custo-benefício no transporte de mercadorias.'
-  },
-  { 
-    name: 'Marketing Plus', 
-    sector: 'Marketing Digital', 
-    initials: 'MP',
-    category: 'Serviços',
-    description: 'Estratégias de marketing digital inovadoras que conectam marcas com seus públicos-alvo de forma eficaz e mensurável.'
-  },
-  { 
-    name: 'RH Solutions', 
-    sector: 'Recursos Humanos', 
-    initials: 'RH',
-    category: 'Serviços',
-    description: 'Soluções completas em gestão de pessoas, desde recrutamento até desenvolvimento organizacional e retenção de talentos.'
+    description: 'Transformando dados em insights valiosos através de análises avançadas e dashboards interativos para tomada de decisão.',
+    image: '/images/GRUPOS.png'
   }
 ]
 
@@ -185,16 +101,16 @@ const prev = () => { stop(); update((currentIndex.value - 1 + totalSlides) % tot
 const go = (i: number) => { stop(); update(i); start() }
 
 // Função para abrir modal ou redirecionar para mais informações sobre a empresa
+const showImageModal = ref(false)
+const modalImageSrc = ref('')
 const openCompanyModal = (company: any) => {
-  // Por enquanto, vamos apenas mostrar um alerta com informações da empresa
-  // Você pode substituir isso por um modal ou redirecionamento
-  alert(`Empresa: ${company.name}\nSetor: ${company.sector}\n\nMais informações em breve!`)
-  
-  // Futuramente, você pode usar:
-  // 1. Abrir um modal com detalhes da empresa
-  // 2. Redirecionar para uma página de detalhes
-  // 3. Abrir o site da empresa em uma nova aba
-  // window.open(`https://www.${company.name.toLowerCase().replace(/\s+/g, '')}.com.br`, '_blank')
+  modalImageSrc.value = company?.image || '/images/GRUPOS.png'
+  showImageModal.value = true
+  if (typeof document !== 'undefined') document.body.style.overflow = 'hidden'
+}
+const closeImageModal = () => {
+  showImageModal.value = false
+  if (typeof document !== 'undefined') document.body.style.overflow = ''
 }
 
 let touchStartX = 0
@@ -213,7 +129,7 @@ onMounted(() => {
     start()
   })
 })
-onUnmounted(() => { stop() })
+onUnmounted(() => { stop(); if (typeof document !== 'undefined') document.body.style.overflow = '' })
 </script>
 
 <style scoped>
@@ -243,7 +159,7 @@ onUnmounted(() => { stop() })
 /* Button hover effects */
 .nav-button:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 0 20px rgba(210, 210, 212, 0.3);
 }
 
 /* Smooth transitions */

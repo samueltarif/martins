@@ -7,8 +7,8 @@ export default <Config>{
     extend: {
       colors: {
         accent: {
-          primary: '#6366F1',
-          secondary: '#8B5CF6',
+          primary: '#d2d2d4',
+          secondary: '#d2d2d4',
           highlight: '#10B981'
         }
       }

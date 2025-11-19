@@ -1,18 +1,13 @@
 <template>
-  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700/50 shadow-sm" ref="headerRef">
+  <header class="sticky top-0 left-0 right-0 w-full z-50 bg-[var(--gradient-hero)] shadow-sm backdrop-blur-sm" ref="headerRef">
     <div class="max-w-7xl mx-auto px-5">
-      <nav class="flex items-center justify-between py-4 relative" aria-label="Navegação principal">
-        <!-- Logo -->
-        <a href="#home" class="text-2xl font-bold bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] bg-clip-text text-transparent z-10">
-          MR
-        </a>
-
+      <nav class="grid grid-cols-1 lg:grid-cols-3 items-center py-4 relative" aria-label="Navegação principal">
         <!-- Desktop Navigation -->
         <ul class="hidden lg:flex items-center gap-6 font-medium">
           <li v-for="item in menuItems" :key="item.id">
             <a 
               :href="`#${item.href}`" 
-              class="nav-link relative py-2 text-gray-800 dark:text-gray-200 hover:text-[var(--accent-primary)] transition-all duration-200"
+              class="nav-link relative py-2 text-gray-800 dark:text-gray-200 hover:text-[var(--text-primary)] transition-all duration-200"
               :class="{ 
                 'active': isActive(item.href)
               }"
@@ -24,8 +19,25 @@
           </li>
         </ul>
 
+        <!-- Logo -->
+        <a href="#home" class="justify-self-center z-10 inline-block">
+          <img :src="logoSrc" alt="MR" style="width: 5cm; height: 5cm; object-fit: contain;" @error="onLogoError" />
+        </a>
+
         <!-- Theme Toggle & Mobile Menu Button -->
-        <div class="flex items-center gap-3">
+        <div class="flex flex-col items-end gap-2 justify-self-end lg:flex-row lg:items-center lg:gap-3">
+          <!-- Mobile Menu Button -->
+          <button 
+            class="lg:hidden flex flex-col gap-1.5 w-8 h-8 items-center justify-center" 
+            @click="toggleMobileMenu" 
+            :aria-expanded="mobileMenuOpen.toString()" 
+            aria-label="Abrir menu de navegação"
+          >
+            <span class="block w-6 h-0.5 bg-gray-800 dark:bg-gray-200 rounded transition-all duration-300" :class="mobileMenuOpen ? 'translate-y-1.5 rotate-45' : ''"></span>
+            <span class="block w-6 h-0.5 bg-gray-800 dark:bg-gray-200 rounded transition-all duration-300" :class="mobileMenuOpen ? 'opacity-0' : ''"></span>
+            <span class="block w-6 h-0.5 bg-gray-800 dark:bg-gray-200 rounded transition-all duration-300" :class="mobileMenuOpen ? '-translate-y-1.5 -rotate-45' : ''"></span>
+          </button>
+
           <button 
             class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" 
             @click="toggleTheme" 
@@ -38,18 +50,6 @@
             <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5 text-gray-700 dark:text-gray-300">
               <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
             </svg>
-          </button>
-          
-          <!-- Mobile Menu Button -->
-          <button 
-            class="lg:hidden flex flex-col gap-1.5 w-8 h-8 items-center justify-center" 
-            @click="toggleMobileMenu" 
-            :aria-expanded="mobileMenuOpen.toString()" 
-            aria-label="Abrir menu de navegação"
-          >
-            <span class="block w-6 h-0.5 bg-gray-800 dark:bg-gray-200 rounded transition-all duration-300" :class="mobileMenuOpen ? 'translate-y-1.5 rotate-45' : ''"></span>
-            <span class="block w-6 h-0.5 bg-gray-800 dark:bg-gray-200 rounded transition-all duration-300" :class="mobileMenuOpen ? 'opacity-0' : ''"></span>
-            <span class="block w-6 h-0.5 bg-gray-800 dark:bg-gray-200 rounded transition-all duration-300" :class="mobileMenuOpen ? '-translate-y-1.5 -rotate-45' : ''"></span>
           </button>
         </div>
       </nav>
@@ -86,17 +86,19 @@
     </Transition>
   </header>
 
-  <!-- Spacer to prevent content overlap -->
-  <div v-if="isClient" :style="{ height: headerHeight + 'px' }"></div>
+  
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick, computed } from 'vue'
 import { useTheme } from '@/composables/useTheme'
 import { useActiveSection } from '@/composables/useActiveSection'
 
 const { toggle: toggleTheme, theme } = useTheme()
 const { isActive } = useActiveSection()
+
+const logoSrc = computed(() => theme.value === 'light' ? '/images/logo tema claro.png' : '/images/mr versão branca.png')
+const onLogoError = (e: Event) => { (e.target as HTMLImageElement).src = '/images/logo tema claro.jpg' }
 
 const headerRef = ref<HTMLElement>()
 const headerHeight = ref(0)
@@ -165,20 +167,20 @@ onUnmounted(() => {
 
 <style scoped>
 /* Custom scrollbar for mobile menu */
-@media (max-width: 1024px) {
-  header::-webkit-scrollbar {
-    width: 4px;
+  @media (max-width: 1024px) {
+    header::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    header::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    header::-webkit-scrollbar-thumb {
+    background: rgba(210, 210, 212, 0.3);
+      border-radius: 2px;
+    }
   }
-  
-  header::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  header::-webkit-scrollbar-thumb {
-    background: rgba(124, 58, 237, 0.3);
-    border-radius: 2px;
-  }
-}
 
 /* Smooth transitions for all interactive elements */
 * {

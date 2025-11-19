@@ -1,8 +1,8 @@
 <template>
   <section id="contact" class="py-16">
     <div class="max-w-3xl mx-auto px-5">
-      <h2 class="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] bg-clip-text text-transparent">Entre em Contato</h2>
-      <p class="text-center text-[var(--text-secondary)] mb-10 text-lg">Vamos conversar sobre como posso ajudar seu negócio</p>
+      <h2 class="text-4xl font-bold text-center mb-2 text-[var(--text-primary)]">Entre em Contato</h2>
+      <p class="text-center text-[var(--text-primary)] mb-10 text-lg">Vamos conversar sobre como posso ajudar seu negócio</p>
       <form class="contact-form" @submit.prevent="onSubmit" novalidate>
         <input type="text" name="website" v-model="honeypot" class="absolute -left-[9999px] opacity-0 pointer-events-none" tabindex="-1" autocomplete="off">
         <div class="form-group" :class="stateClass(nameValid)">
@@ -36,7 +36,7 @@
           <textarea id="message" v-model.trim="message" @blur="onBlur('message')" @input="onInput('message')" rows="5" required class="w-full px-4 py-3 rounded-lg outline-none"></textarea>
           <span v-if="messageValid===false" class="text-xs text-red-500 mt-1 block">Por favor, escreva sua mensagem</span>
         </div>
-        <button type="submit" :disabled="loading" class="w-full px-4 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)]" :class="loading ? 'opacity-60 cursor-not-allowed' : ''">
+        <button type="submit" :disabled="loading" class="w-full px-4 py-4 rounded-xl font-semibold text-white bg-black" :class="loading ? 'opacity-60 cursor-not-allowed' : ''">
           {{ loading ? 'Enviando...' : 'Enviar Mensagem' }}
         </button>
         <div v-if="submitted && success" class="mt-4 p-4 rounded bg-green-100 text-green-600 border border-green-400 text-center">Mensagem enviada com sucesso! Entrarei em contato em breve.</div>

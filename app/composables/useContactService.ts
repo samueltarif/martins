@@ -8,8 +8,17 @@ export type ContactPayload = {
 
 export function useContactService() {
   const sendContact = async (payload: ContactPayload) => {
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    return { ok: true }
+    try {
+      const r = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      const j = await r.json().catch(() => ({}))
+      return { ok: !!(j && j.ok) }
+    } catch {
+      return { ok: false }
+    }
   }
 
   return { sendContact }

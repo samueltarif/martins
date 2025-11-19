@@ -6,11 +6,24 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss'],
   css: ['@/assets/css/tailwind.css', '@/assets/css/theme.css', '@/assets/css/base.css', '@/assets/css/components.css'],
   compatibilityDate: '2025-11-12',
+  devtools: { enabled: true },
+  devServer: {
+    port: 3005,
+    host: 'localhost'
+  },
   runtimeConfig: {
     supabaseServiceRole: process.env.NUXT_SUPABASE_SERVICE_ROLE,
     public: {
       supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
       supabaseAnonKey: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY
+    }
+    ,
+    smtpUser: process.env.NUXT_SMTP_USER,
+    smtpPass: process.env.NUXT_SMTP_PASS
+  },
+  vite: {
+    server: {
+      hmr: false
     }
   },
   nitro: {
@@ -27,7 +40,7 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'Fellip Martins — MR - Representante Comercial Especializado com experiência em vendas B2B, automação industrial e soluções corporativas.' },
         { name: 'keywords', content: 'representante comercial, vendas B2B, soluções empresariais, automação industrial, consultoria' },
-        { name: 'theme-color', content: '#6366F1' },
+        { name: 'theme-color', content: '#f5f5f5' },
         { property: 'og:title', content: 'Fellip Martins — MR - Representante Comercial Especializado' },
         { property: 'og:description', content: 'Conectando empresas com soluções inovadoras' },
         { property: 'og:type', content: 'website' },

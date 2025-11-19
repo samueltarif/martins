@@ -1,15 +1,15 @@
 <template>
-  <article class="bg-[var(--bg-secondary)] rounded-2xl overflow-hidden shadow border border-black/10">
-    <div class="relative h-52 overflow-hidden">
+  <article class="portfolio-card bg-[var(--bg-secondary)] rounded-2xl overflow-hidden shadow border border-black/10">
+    <div class="portfolio-image relative h-52 overflow-hidden">
       <img v-if="currentSrc" :src="currentSrc" :alt="card.title" class="w-full h-full object-cover cursor-zoom-in" @error="onError" @click="openLightbox">
-      <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-white text-xs font-semibold bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)]">{{ card.category }}</span>
+      <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-white text-xs font-semibold bg-black">{{ card.category }}</span>
       <button v-if="hasMultiple" @click="prev" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[var(--bg-secondary)] border border-black/10 flex items-center justify-center">&lt;</button>
       <button v-if="hasMultiple" @click="next" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[var(--bg-secondary)] border border-black/10 flex items-center justify-center">&gt;</button>
     </div>
-    <div class="p-6">
+    <div class="portfolio-content p-6">
       <h3 class="text-xl font-semibold mb-2">{{ card.title }}</h3>
       <p class="text-sm text-[var(--text-secondary)] mb-3">{{ card.description }}</p>
-      <a href="#contact" class="text-[var(--accent-primary)] font-semibold text-sm inline-flex items-center gap-2">Saiba Mais
+      <a href="#contact" class="text-[var(--text-primary)] font-semibold text-sm inline-flex items-center gap-2">Saiba Mais
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>

@@ -16,14 +16,17 @@
         <div>
           <h3 class="text-base font-semibold mb-2">Links Rápidos</h3>
           <nav class="flex flex-col gap-1" aria-label="Links de rodapé">
-            <a href="#home" class="text-sm text-[var(--text-secondary)] hover:text-[var(--accent-primary)]">Início</a>
-            <a href="#about" class="text-sm text-[var(--text-secondary)] hover:text-[var(--accent-primary)]">Sobre</a>
-            <a href="#portfolio" class="text-sm text-[var(--text-secondary)] hover:text-[var(--accent-primary)]">Portfólio</a>
-            <a href="#contact" class="text-sm text-[var(--text-secondary)] hover:text-[var(--accent-primary)]">Contato</a>
+            <a href="#home" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Início</a>
+            <a href="#about" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Sobre</a>
+            <a href="#portfolio" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Portfólio</a>
+            <a href="#contact" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Contato</a>
           </nav>
         </div>
       </div>
-      <div class="text-center pt-6 border-t border-black/10 text-sm text-[var(--text-secondary)]">&copy; 2025 Fellip Martins — MR. Todos os direitos reservados.</div>
+      <div class="text-center pt-6 border-t border-black/10 text-sm text-[var(--text-secondary)]">
+        &copy; 2025 Fellip Martins — Martins Representações Todos os direitos reservados.
+        <div class="mt-2 text-xs">Desenvolvido por Samuel Tarif - Contato: 11 95137-2631</div>
+      </div>
     </div>
   </footer>
 </template>

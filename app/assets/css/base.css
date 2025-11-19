@@ -99,12 +99,12 @@ input, textarea, select {
 .btn-primary {
   background: var(--gradient-main);
   color: white;
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.4);
+  box-shadow: var(--shadow-lg);
 }
 
 .btn-secondary {
@@ -199,12 +199,12 @@ input, textarea, select {
 }
 
 .nav-link:hover {
-  background-color: rgba(124, 58, 237, 0.1);
-  color: #7C3AED;
+  background-color: rgba(210, 210, 212, 0.1);
+  color: var(--text-primary);
 }
 
 .nav-link.active {
-  color: #7C3AED;
+  color: #000008;
   font-weight: 600;
 }
 
@@ -215,7 +215,7 @@ input, textarea, select {
   left: 50%;
   width: 0;
   height: 2px;
-  background: #7C3AED;
+  background: var(--accent-primary);
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
@@ -240,14 +240,14 @@ input, textarea, select {
   }
   
   .mobile-menu-item:hover {
-    background: rgba(124, 58, 237, 0.1);
-    color: #7C3AED;
+    background: rgba(210, 210, 212, 0.1);
+    color: var(--text-primary);
   }
   
   .mobile-menu-item.active {
-    background: rgba(124, 58, 237, 0.15);
-    color: #7C3AED;
+    background: rgba(210, 210, 212, 0.15);
+    color: var(--text-primary);
     font-weight: 600;
-    border-left: 3px solid #7C3AED;
+    border-left: 3px solid var(--accent-primary);
   }
 }

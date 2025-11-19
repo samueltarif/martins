@@ -272,10 +272,31 @@
   margin-bottom: 0.5rem;
 }
 
+html[data-theme='dark'] #about .stat-card {
+  border: 1px solid #ffffff;
+}
+
 .stat-label {
   color: var(--text-secondary);
   font-size: 0.875rem;
   font-weight: 500;
+}
+
+html[data-theme='dark'] #portfolio {
+  border: none;
+}
+
+/* About: thin black outline in light theme */
+html[data-theme='light'] #about .stat-card {
+  border: 1px solid #000000;
+}
+
+.about-photo {
+  border-color: #000000;
+}
+
+html[data-theme='dark'] .about-photo {
+  border-color: #ffffff;
 }
 
 .portfolio {
@@ -361,12 +382,29 @@
   transform: scale(1.1);
 }
 
+html[data-theme='light'] .portfolio-card {
+  border: 1px solid #000000;
+}
+html[data-theme='dark'] .portfolio-card {
+  border: 1px solid #ffffff;
+}
+
+html[data-theme='dark'] #portfolio .flex button {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Companies: thin black outline in light theme */
+html[data-theme='light'] #companies .company-card {
+  border: 1px solid #000000;
+}
+
 .portfolio-tag {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: var(--gradient-main);
-  color: white;
+  background: #000000;
+  color: #FFFFFF;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -430,7 +468,7 @@
   width: 60px;
   height: 60px;
   margin: 0 auto 1.5rem;
-  background: var(--gradient-main);
+  background: #000000;
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -445,7 +483,8 @@
 .benefit-icon svg {
   width: 32px;
   height: 32px;
-  fill: white;
+  fill: #FFFFFF;
+  stroke: #FFFFFF;
 }
 
 .benefit-card h3 {
@@ -458,6 +497,20 @@
   color: var(--text-secondary);
   font-size: 0.875rem;
   line-height: 1.6;
+}
+
+/* Benefits: thin black outline in light theme */
+html[data-theme='light'] #benefits article {
+  border: 1px solid #000000;
+}
+html[data-theme='dark'] #benefits article {
+  border: 1px solid #ffffff;
+}
+html[data-theme='light'] #testimonials article {
+  border: 1px solid #000000;
+}
+html[data-theme='dark'] #testimonials article {
+  border: 1px solid #ffffff;
 }
 
 .testimonials {
@@ -692,8 +745,8 @@
 .submit-btn {
   width: 100%;
   padding: 16px;
-  background: var(--gradient-main);
-  color: white;
+  background: #000000;
+  color: #FFFFFF;
   border: none;
   border-radius: 12px;
   font-weight: 600;
@@ -709,7 +762,7 @@
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.4);
+  box-shadow: var(--shadow-lg);
 }
 
 .submit-btn:disabled {
@@ -1029,4 +1082,7 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+.star polygon {
+  fill: #FFD700;
 }
