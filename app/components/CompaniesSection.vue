@@ -56,6 +56,10 @@ const companies: Company[] = [
   {
     name: 'Qualitec',
     image: '/images/qualitec_fillip.png'
+  },
+  {
+    name: 'CVS',
+    image: '/images/cvs_fillip.png'
   }
 ]
 
