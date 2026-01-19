@@ -75,7 +75,7 @@ const closeCompaniesModal = () => { showCompaniesModal.value = false }
   display: flex;
   align-items: center;
   gap: 3rem;
-  animation: companyScroll 30s linear infinite;
+  animation: companyScroll 7.5s linear infinite;
 }
 
 .company-item {

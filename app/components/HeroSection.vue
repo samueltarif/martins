@@ -66,7 +66,7 @@ const particleStyle = (i: number) => {
   75% { transform: translateY(-20px) translateX(10px) }
 }
 .cert-marquee{ overflow:hidden; width:100%; }
-.cert-track{ display:flex; align-items:center; gap:2rem; animation: certScroll 30s linear infinite; }
+.cert-track{ display:flex; align-items:center; gap:2rem; animation: certScroll 7.5s linear infinite; }
 .cert-item{ height:200px; width:auto; filter: saturate(1.2); }
 @keyframes certScroll { from { transform: translateX(0) } to { transform: translateX(-50%) } }
 .modal-backdrop{ }
