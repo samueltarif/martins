@@ -1,10 +1,27 @@
-import { defineEventHandler, readBody } from 'h3'
+import { defineEventHandler, readBody, createError, getHeader } from 'h3'
 import { createClient } from '@supabase/supabase-js'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const supabase = createClient(config.public.supabaseUrl as string, config.supabaseServiceRole as string)
+
+  // Verificar autenticação
+  const authHeader = getHeader(event, 'authorization')
+  if (!authHeader) {
+    throw createError({ statusCode: 401, statusMessage: 'Authorization required' })
+  }
+
+  const { data: user, error: authError } = await supabase.auth.getUser(authHeader.replace('Bearer ', ''))
+  if (authError || !user.user) {
+    throw createError({ statusCode: 403, statusMessage: 'Invalid or expired token' })
+  }
+
+  // Verificar permissão (exemplo: apenas usuários com email específico ou role)
+  const ADMIN_EMAILS = ['admin@example.com', 'fellip@martinsrepresentacoes.com.br']
+  if (!ADMIN_EMAILS.includes(user.user.email || '')) {
+    throw createError({ statusCode: 403, statusMessage: 'Insufficient permissions' })
+  }
 
   const body = await readBody(event)
   const id = body?.id as number | string | undefined

@@ -11,61 +11,17 @@
         <div class="w-24 h-1 bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] mx-auto mt-6 rounded-full"></div>
       </div>
       
-      <div class="relative max-w-2xl mx-auto" @mouseenter="stop" @mouseleave="start" @touchstart="onTouchStart" @touchend="onTouchEnd">
-        <div class="overflow-hidden rounded-2xl">
-          <div class="flex transition-transform duration-500" :style="{ transform: `translateX(-${currentIndex*100}%)` }">
-            <!-- Todas as empresas em slides individuais -->
-            <div v-for="(company, index) in allCompanies" :key="index" class="min-w-full">
-              <div class="p-8">
-                <div class="company-card flex flex-col items-center gap-6 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer animate-fade-in bg-white rounded-2xl border border-black/10"
-                     @click="openCompanyModal(company)">
-                  <img src="/images/GRUPOS.png" alt="Empresas" class="mx-auto" loading="lazy">
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="company-marquee cursor-pointer" role="button" aria-label="Abrir imagem com todas as empresas" @click="openCompaniesModal" @keydown.enter="openCompaniesModal" tabindex="0">
+        <div class="company-track">
+          <img v-for="company in companies" :key="company.name" :src="company.image" :alt="`Logo da empresa ${company.name}`" class="company-item" loading="lazy" />
+          <img v-for="company in companies" :key="`${company.name}-duplicate`" :src="company.image" :alt="`Logo da empresa ${company.name}`" class="company-item" loading="lazy" />
         </div>
-        
-        <!-- Client-side only content to prevent hydration mismatch -->
-        <ClientOnly>
-          <!-- Navigation Buttons -->
-          <div class="flex items-center justify-center gap-6 mt-8">
-            <button class="nav-button w-11 h-11 rounded-full bg-[var(--bg-secondary)] border border-black/10 flex items-center justify-center hover:bg-[var(--accent-primary)] hover:text-white transition-all duration-200" @click="prev">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
-                <polyline points="15 18 9 12 15 6"/>
-              </svg>
-            </button>
-            <div class="flex gap-2">
-              <button v-for="(slide, i) in totalSlides" :key="i" 
-                      class="w-3 h-3 rounded-full transition-all duration-200" 
-                      :class="i===currentIndex ? 'w-8 rounded bg-[var(--accent-primary)]' : 'bg-black/10 hover:bg-black/20'" 
-                      @click="go(i)">
-              </button>
-            </div>
-            <button class="nav-button w-11 h-11 rounded-full bg-[var(--bg-secondary)] border border-black/10 flex items-center justify-center hover:bg-[var(--accent-primary)] hover:text-white transition-all duration-200" @click="next">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
-                <polyline points="9 18 15 12 9 6"/>
-              </svg>
-            </button>
-          </div>
-          
-          <!-- Progress Indicator -->
-          <div class="mt-6 text-center">
-            <p class="text-sm text-[var(--text-secondary)] mb-2">
-              {{ currentIndex + 1 }} de {{ totalSlides }} empresas
-            </p>
-            <div class="w-32 h-1 bg-gray-200 rounded-full mx-auto overflow-hidden">
-              <div class="h-full bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] rounded-full transition-all duration-300" 
-                   :style="{ width: `${((currentIndex + 1) / totalSlides) * 100}%` }">
-              </div>
-            </div>
-          </div>
-        </ClientOnly>
-        <div v-if="showImageModal" class="fixed inset-0 z-[2000] bg-black/80 backdrop-blur-sm flex items-center justify-center" @click="closeImageModal">
-          <div class="relative max-w-5xl w-full px-5" @click.stop>
-            <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white text-black flex items-center justify-center" aria-label="Fechar" @click="closeImageModal">×</button>
-            <img :src="modalImageSrc" alt="Empresas" class="w-full h-auto rounded-2xl shadow"/>
-          </div>
+      </div>
+      
+      <div v-if="showCompaniesModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center">
+        <div class="relative bg-white rounded-2xl p-3 shadow-xl max-w-[90vw] max-h-[85vh]">
+          <button class="absolute top-2 right-2 px-3 py-1 rounded-md bg-black text-white" @click="closeCompaniesModal">Fechar</button>
+          <img :src="companiesImg" alt="Todas as empresas representadas" class="block max-h-[80vh] w-auto object-contain" />
         </div>
       </div>
     </div>
@@ -73,113 +29,108 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref } from 'vue'
 
-const currentIndex = ref(0)
-let timer: any
-const isClient = ref(false)
+interface Company {
+  name: string
+  image: string
+}
 
-// Todas as empresas em uma única lista para slides individuais
-const allCompanies = [
+const companies: Company[] = [
   {
-    name: 'DataFlow Analytics',
-    sector: 'Business Intelligence',
-    initials: 'DA',
-    category: 'Tecnologia',
-    description: 'Transformando dados em insights valiosos através de análises avançadas e dashboards interativos para tomada de decisão.',
-    image: '/images/GRUPOS.png'
+    name: 'Enigma',
+    image: '/images/enigma_fillip.png'
+  },
+  {
+    name: 'Válvulas',
+    image: '/images/valvulas_fillip.png'
+  },
+  {
+    name: 'Carbinox',
+    image: '/images/carbinox_fillip.png'
+  },
+  {
+    name: 'Dinâmica',
+    image: '/images/dinamica_fillip.png'
+  },
+  {
+    name: 'Qualitec',
+    image: '/images/qualitec_fillip.png'
   }
 ]
 
-const totalSlides = allCompanies.length
-
-const update = (i: number) => { currentIndex.value = i }
-const start = () => { if (timer) clearInterval(timer); timer = setInterval(() => { update((currentIndex.value + 1) % totalSlides) }, 6000) }
-const stop = () => { if (timer) clearInterval(timer) }
-const next = () => { stop(); update((currentIndex.value + 1) % totalSlides); start() }
-const prev = () => { stop(); update((currentIndex.value - 1 + totalSlides) % totalSlides); start() }
-const go = (i: number) => { stop(); update(i); start() }
-
-// Função para abrir modal ou redirecionar para mais informações sobre a empresa
-const showImageModal = ref(false)
-const modalImageSrc = ref('')
-const openCompanyModal = (company: any) => {
-  modalImageSrc.value = company?.image || '/images/GRUPOS.png'
-  showImageModal.value = true
-  if (typeof document !== 'undefined') document.body.style.overflow = 'hidden'
-}
-const closeImageModal = () => {
-  showImageModal.value = false
-  if (typeof document !== 'undefined') document.body.style.overflow = ''
-}
-
-let touchStartX = 0
-let touchEndX = 0
-const onTouchStart = (e: TouchEvent) => { touchStartX = e.changedTouches[0].screenX; stop() }
-const onTouchEnd = (e: TouchEvent) => { 
-  touchEndX = e.changedTouches[0].screenX; 
-  if (touchStartX - touchEndX > 50) next(); 
-  else if (touchEndX - touchStartX > 50) prev(); 
-  start() 
-}
-
-onMounted(() => { 
-  isClient.value = true
-  nextTick(() => {
-    start()
-  })
-})
-onUnmounted(() => { stop(); if (typeof document !== 'undefined') document.body.style.overflow = '' })
+const companiesImg = '/images/GRUPOS.png'
+const showCompaniesModal = ref(false)
+const openCompaniesModal = () => { showCompaniesModal.value = true }
+const closeCompaniesModal = () => { showCompaniesModal.value = false }
 </script>
 
 <style scoped>
-/* Smooth hover animations for company cards */
-.company-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.company-marquee {
+  overflow: hidden;
+  width: 100%;
 }
 
-.company-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+.company-track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  animation: companyScroll 30s linear infinite;
 }
 
-/* Gradient animation for initials */
-.initials-gradient {
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
+.company-item {
+  height: 80px;
+  width: auto;
+  filter: grayscale(20%) opacity(0.9);
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  object-fit: contain;
+  max-width: 200px;
 }
 
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.company-item:hover {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* Button hover effects */
-.nav-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(210, 210, 212, 0.3);
-}
-
-/* Smooth transitions */
-* {
-  transition: all 0.2s ease-in-out;
-}
-
-/* Fade in animation */
-@keyframes fadeIn {
+@keyframes companyScroll {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(0);
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%);
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out;
+/* Pausar animação no hover para melhor acessibilidade */
+.company-marquee:hover .company-track {
+  animation-play-state: paused;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .company-item {
+    height: 60px;
+    max-width: 150px;
+  }
+  
+  .company-track {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .company-item {
+    height: 50px;
+    max-width: 120px;
+  }
+  
+  .company-track {
+    gap: 1.5rem;
+  }
 }
 </style>

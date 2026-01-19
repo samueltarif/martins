@@ -14,12 +14,14 @@
       </a>
     </div>
 
-    <div v-if="lightboxOpen" class="fixed inset-0 z-[1200] bg-black/80 flex items-center justify-center" @click.self="closeLightbox">
-      <img :src="currentSrc" alt="Imagem" class="max-w-[90vw] max-h-[90vh] object-contain">
-      <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white text-xl" @click="closeLightbox">×</button>
-      <button v-if="hasMultiple" @click="prev" class="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white text-xl">‹</button>
-      <button v-if="hasMultiple" @click="next" class="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white text-xl">›</button>
-    </div>
+    <teleport to="body">
+      <div v-if="lightboxOpen" class="fixed inset-0 z-[3000] bg-black/90 flex items-center justify-center" @click.self="closeLightbox">
+        <button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white text-xl" @click="closeLightbox">×</button>
+        <img :src="currentSrc" alt="Imagem" class="w-screen h-screen object-contain">
+        <button v-if="hasMultiple" @click="prev" class="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white text-xl">‹</button>
+        <button v-if="hasMultiple" @click="next" class="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white text-xl">›</button>
+      </div>
+    </teleport>
   </article>
 </template>
 
