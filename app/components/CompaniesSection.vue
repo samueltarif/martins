@@ -79,7 +79,7 @@ const closeCompaniesModal = () => { showCompaniesModal.value = false }
 }
 
 .company-item {
-  height: 120px;
+  height: 204px;
   width: auto;
   filter: grayscale(20%) opacity(0.9);
   transition: all 0.3s ease;
@@ -88,7 +88,7 @@ const closeCompaniesModal = () => { showCompaniesModal.value = false }
   padding: 1rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   object-fit: contain;
-  max-width: 300px;
+  max-width: 510px;
 }
 
 .company-item:hover {
@@ -114,8 +114,8 @@ const closeCompaniesModal = () => { showCompaniesModal.value = false }
 /* Responsividade */
 @media (max-width: 768px) {
   .company-item {
-    height: 90px;
-    max-width: 220px;
+    height: 153px;
+    max-width: 374px;
   }
   
   .company-track {
@@ -125,8 +125,8 @@ const closeCompaniesModal = () => { showCompaniesModal.value = false }
 
 @media (max-width: 480px) {
   .company-item {
-    height: 70px;
-    max-width: 180px;
+    height: 119px;
+    max-width: 306px;
   }
   
   .company-track {

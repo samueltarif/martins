@@ -38,8 +38,9 @@
             <span class="block w-6 h-0.5 bg-gray-800 dark:bg-gray-200 rounded transition-all duration-300" :class="mobileMenuOpen ? '-translate-y-1.5 -rotate-45' : ''"></span>
           </button>
 
+          <!-- Desktop Theme Toggle -->
           <button 
-            class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" 
+            class="hidden lg:flex w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" 
             @click="toggleTheme" 
             aria-label="Alternar tema claro/escuro"
           >
@@ -86,7 +87,20 @@
     </Transition>
   </header>
 
-  
+  <!-- Mobile Fixed Theme Toggle Button -->
+  <button 
+    class="lg:hidden fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 shadow-lg hover:shadow-xl" 
+    @click="toggleTheme" 
+    aria-label="Alternar tema claro/escuro"
+  >
+    <svg v-if="theme === 'light'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-6 h-6 text-gray-700 dark:text-gray-300">
+      <circle cx="12" cy="12" r="5"/>
+      <path d="M12 1v2M12 21v2M21 12h-2M5 12H3M18.364 5.636l-1.414 1.414M7.05 16.95l-1.414 1.414M18.364 18.364l-1.414-1.414M7.05 7.05L5.636 5.636"/>
+    </svg>
+    <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-6 h-6 text-gray-700 dark:text-gray-300">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+    </svg>
+  </button>
 </template>
 
 <script setup lang="ts">
